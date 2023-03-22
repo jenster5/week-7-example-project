@@ -1,24 +1,27 @@
-/* eslint-disable */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable padded-blocks */
+/* eslint-disable no-trailing-spaces */
 import React from 'react';
 import { formatRelative } from 'date-fns';
 
-
-function TaskList({ loading, taskList, setTaskList }) {
+const TaskList = ({ loading, taskList, setTaskList }) => {
 
   if (loading) {
-    return <h1>Loading in progress...</h1>;
+    return <h1>Loading in progress...</h1>
   }
   const onTaskCheckChange = (task) => {
-    setTaskList(taskList => taskList.map(singleTask => {
+    setTaskList((taskList) => taskList.map((singleTask) => {
+      // eslint-disable-next-line no-underscore-dangle
       if (singleTask._id === task._id) {
-        return Object.assign({}, singleTask, { isChecked: !singleTask.isChecked });
-        return singleTask;
+        return { singleTask, isChecked: !singleTask.isChecked };
       }
+      return singleTask;
     }));
-  };
+  }
   return (
     <section>
-      {taskList.reverse().map(task => (
+      {taskList.reverse().map((task) => (
         <div key={task._id}>
           <h4>{task.description}</h4>
           <input onChange={() => onTaskCheckChange(task)} type="checkbox" checked={task.isChecked} />
